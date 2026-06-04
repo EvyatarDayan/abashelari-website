@@ -861,6 +861,37 @@ Download Time2See today and help your child connect with time like never before!
     appStoreUrl: 'https://apps.apple.com/us/app/time2see/id6749707107'
   },
   {
+    slug: 'alphatime',
+    folderName: 'AlphaTime',
+    title: 'AlphaTime',
+    subtitle: 'Elegant time in words',
+    description: `Elegant Time in Words, Right on Your Display!
+
+Want to experience time in a more natural and beautiful way? AlphaTime transforms your device into a sophisticated word clock,
+displaying the current time through elegant typography, whether you're at your desk, in bed, or decorating your living room.
+
+With a focus on minimalist design and linguistic accuracy,
+AlphaTime is the perfect companion for those who appreciate the art of language and the beauty of high-end displays.
+
+Why Users Love AlphaTime?
+
+- Multilingual Elegance - Experience time in Hebrew (with precise Niqqud), English, Swedish, German, and French.
+- Stunning Visual Themes - Choose from curated palettes like "Midnight," "Sepia," or "Nordic" to match your room's vibe.
+- Premium Typography - Select from multiple Serif and Modern fonts designed for maximum legibility and style.
+- Perfect for Landscape & iPad - Optimized to look incredible as a full-screen display on your nightstand or office desk.
+- Customizable Appearance - Fully adjust background and text colors to create your own personalized clock.
+- See the time anytime - Home Screen & Lock Screen Widgets will show the time as well.
+- Intuitive & Simple - A clutter-free interface that focuses entirely on what matters: the present moment.
+
+Whether you are looking for a unique bedside clock, a stylish desk accessory, or a way to stay connected to a new language,
+AlphaTime gives you a timeless way to see the day.
+
+Download AlphaTime now and let your clock tell the story!`,
+    iconUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d2/55/ee/d255ee62-f0f8-507f-5af1-516de8fbc4ba/AppIcon-0-0-1x_U007epad-0-1-85-220.png/100x100bb.jpg',
+    appStoreUrl: 'https://apps.apple.com/us/app/alphatime-clock/id6759533912'
+  },
+  {
     slug: 'currensee',
     folderName: 'Curren$ee',
     title: 'Curren$ee',
@@ -1152,6 +1183,42 @@ const APP_MEDIA_CONTEXT = require.context(
   /\.(png|jpe?g|webp|mov|mp4|webm)$/i
 );
 
+/** Landscape mockup filenames (width > height); shown without portrait aspect forcing */
+const LANDSCAPE_SCREENSHOT_FILENAMES = new Set([
+  'iPhone4.001.png',
+  'iPhone5.001.png'
+]);
+
+const ALL_LANDSCAPE_SCREENSHOT_SLUGS = new Set([
+  'swedish-letters-and-words',
+  'swedish-vocabulary-for-kids',
+  'abc-letter-tracing',
+  'hebrew-letter-tracing',
+  'hebrew-letters-and-words',
+  'letters-and-words-for-kids',
+  'swedish-letter-tracing'
+]);
+
+function getScreenshotOrientation(key) {
+  const filename = key.split('/').pop() ?? '';
+  return LANDSCAPE_SCREENSHOT_FILENAMES.has(filename) ? 'landscape' : 'portrait';
+}
+
+function getScreenshotsGridClass(appSlug, mediaItems) {
+  if (ALL_LANDSCAPE_SCREENSHOT_SLUGS.has(appSlug)) {
+    return 'landscape-media';
+  }
+  const hasLandscape = mediaItems.some((item) => item.orientation === 'landscape');
+  const hasPortrait = mediaItems.some((item) => item.orientation === 'portrait');
+  if (hasLandscape && hasPortrait) {
+    return 'has-mixed-orientation';
+  }
+  if (hasLandscape) {
+    return 'landscape-media';
+  }
+  return '';
+}
+
 function getAppMedia(folderName) {
   try {
     return APP_MEDIA_CONTEXT.keys()
@@ -1160,7 +1227,9 @@ function getAppMedia(folderName) {
       .map((key) => {
         const lowerKey = key.toLowerCase();
         const type = /\.(mov|mp4|webm)$/i.test(lowerKey) ? 'video' : 'image';
-        return { type, src: APP_MEDIA_CONTEXT(key) };
+        const orientation =
+          type === 'image' ? getScreenshotOrientation(key) : 'portrait';
+        return { type, src: APP_MEDIA_CONTEXT(key), orientation };
       });
   } catch {
     return [];
@@ -1252,6 +1321,7 @@ function AppDetailPage({ t }) {
     ...mediaItems.filter((item) => item.type === 'video'),
     ...mediaItems.filter((item) => item.type === 'image')
   ];
+  const screenshotsGridClass = getScreenshotsGridClass(app.slug, orderedMediaItems);
 
   return (
     <main className="app-detail-page container">
@@ -1299,21 +1369,14 @@ function AppDetailPage({ t }) {
       <section className="app-screenshots">
         <h2>{t.ourApps.screenshotsHeading}</h2>
         {orderedMediaItems.length > 0 ? (
-          <div
-            className={`app-screenshots-grid ${
-              app.slug === 'swedish-letters-and-words' ||
-              app.slug === 'swedish-vocabulary-for-kids' ||
-              app.slug === 'abc-letter-tracing' ||
-              app.slug === 'hebrew-letter-tracing' ||
-              app.slug === 'hebrew-letters-and-words' ||
-              app.slug === 'letters-and-words-for-kids' ||
-              app.slug === 'swedish-letter-tracing'
-                ? 'landscape-media'
-                : ''
-            }`}
-          >
+          <div className={`app-screenshots-grid ${screenshotsGridClass}`.trim()}>
             {orderedMediaItems.map((item, index) => (
-              <div className="app-media-item" key={`${app.slug}-${item.type}-${index}`}>
+              <div
+                className={`app-media-item${
+                  item.orientation === 'landscape' ? ' is-landscape' : ''
+                }`}
+                key={`${app.slug}-${item.type}-${index}`}
+              >
                 {item.type === 'video' ? (
                   <video src={item.src} autoPlay loop muted playsInline controls />
                 ) : (

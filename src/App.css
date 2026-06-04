@@ -979,11 +979,24 @@ header.hero + main > .section.container {
   border-radius: 22px;
 }
 
-.app-screenshots-grid.landscape-media {
+.app-media-item.is-landscape img,
+.app-media-item.is-landscape video {
+  width: auto;
+  height: auto;
+  max-width: min(100%, 520px);
+  aspect-ratio: unset;
+  object-fit: contain;
+  padding-top: 6px;
+  border-radius: 22px;
+}
+
+.app-screenshots-grid.landscape-media,
+.app-screenshots-grid.has-mixed-orientation {
   grid-auto-columns: max-content;
 }
 
-.landscape-media .app-media-item::before {
+.landscape-media .app-media-item::before,
+.app-media-item.is-landscape::before {
   width: 14%;
   max-width: 36px;
   height: 8px;
