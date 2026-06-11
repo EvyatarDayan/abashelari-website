@@ -892,6 +892,34 @@ Download AlphaTime now and let your clock tell the story!`,
     appStoreUrl: 'https://apps.apple.com/us/app/alphatime-clock/id6759533912'
   },
   {
+    slug: 'takeiteasy',
+    folderName: 'TakeItEasy',
+    title: 'TakeItEasy',
+    subtitle: 'Smile Catcher',
+    description: `Take it easy - Smile catcher.
+
+Effortless Kid Photography, Right at Your Fingertips!
+Looking for a reliable, fast, and stress-free way to capture your child's perfect smile? TakeItEasy is designed to help you engage, distract, and instantly photograph your little ones with ease - whether you're dealing with a squirming baby or a distracted toddler.
+
+With a sleek, modern interface and a built-in library of captivating visual loops,
+TakeItEasy is your perfect daily companion for turning camera-shy moments into beautiful, lasting memories.
+
+Why Parents Love TakeItEasy?
+
+- Captivating Visual Baits - Keep their eyes locked on the lens with high-contrast, looping animations like our skateboarding puppy or bouncing stars.
+- Effortless One-Handed Control - Designed for busy parents, easily snap, zoom, or change video loops with simple gestures while holding your baby.
+- Camera Roll Integration - Swap the built-in animations for a video from your own local library to let your child watch their favorite custom clips.
+- Zero Lag, Total Privacy - All smart processing happens instantly on your device, ensuring your family photos stay 100% private and secure.
+- Always Ready - Never miss a milestone, turn everyday photo struggles into a fun, interactive game your kids will look forward to.
+
+Whether you're trying to snap a quick milestone picture at the park, capture a family holiday photo, or simply trying to get a toddler to look at the lens, TakeItEasy gives you the tools to grab the perfect shot every single time.
+
+Download TakeItEasy now and capture those beautiful smiles today!`,
+    iconUrl:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/36/e1/b7/36e1b74c-e28c-266c-27ac-3ec56b88c221/AppIcon-0-0-1x_U007epad-0-1-85-220.png/100x100bb.jpg',
+    appStoreUrl: 'https://apps.apple.com/us/app/takeiteasy-smile-catcher/id6775045573'
+  },
+  {
     slug: 'currensee',
     folderName: 'Curren$ee',
     title: 'Curren$ee',
